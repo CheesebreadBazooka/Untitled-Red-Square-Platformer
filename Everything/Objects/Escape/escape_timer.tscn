@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkke3jp7i50jp"]
+
+[ext_resource type="Script" uid="uid://wk6m7kbkgm2u" path="res://Objects/Escape/escape_timer.gd" id="1_1c2wf"]
+[ext_resource type="PackedScene" uid="uid://dfdn5yv5bro57" path="res://Entities/Extra Dangerous/doomskull.tscn" id="2_pooh1"]
+
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("timer_node", "label")]
+script = ExtResource("1_1c2wf")
+timer_node = NodePath("Escape Timer/Timer")
+label = NodePath("Escape Timer/Label")
+scene_skull = ExtResource("2_pooh1")
+
+[node name="Escape Timer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+
+[node name="Timer" type="Timer" parent="Escape Timer"]
+one_shot = true
+
+[node name="Label" type="Label" parent="Escape Timer"]
+layout_mode = 0
+offset_left = -123.0
+offset_right = 123.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 48
+text = "12:25"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="Escape Timer/Timer" to="." method="_on_timer_timeout"]

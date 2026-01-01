@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cup3flbansa6m"]
+
+[ext_resource type="Script" uid="uid://s85xg37vs3fo" path="res://Objects/Dangerous/spikes.gd" id="1_2tv0v"]
+[ext_resource type="Texture2D" uid="uid://dmq1jw2aj11wv" path="res://Art/New/Objects/Dangerous/spikes.png" id="2_6faje"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdhh5"]
+size = Vector2(16, 16)
+
+[node name="Spikes" type="Area2D"]
+script = ExtResource("1_2tv0v")
+base_damage_on_enter = true
+base_damage_while_inside = true
+metadata/_custom_type_script = "uid://df3j5sflbnox2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wdhh5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6faje")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

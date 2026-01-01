@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://bhrn7eht2yfh"]
+
+[ext_resource type="Texture2D" uid="uid://yilavfcntg2j" path="res://Art/New/Objects/Escape/placeholder_escapedoor_locked.png" id="1_o4hb6"]
+[ext_resource type="Script" uid="uid://u75ik617cmii" path="res://Objects/Escape/escape_door.gd" id="1_tx813"]
+[ext_resource type="Texture2D" uid="uid://1agajidq0kun" path="res://Art/New/Objects/Escape/placeholder_escapedoor_unlocked_.png" id="2_tx813"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ad8s0"]
+size = Vector2(64, 96)
+
+[sub_resource type="Animation" id="Animation_omyy6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_o4hb6")]
+}
+
+[sub_resource type="Animation" id="Animation_fu7ah"]
+resource_name = "locked"
+length = 0.05
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_o4hb6")]
+}
+
+[sub_resource type="Animation" id="Animation_ycemm"]
+resource_name = "unlocked"
+length = 0.05
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_tx813")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1v2xd"]
+_data = {
+&"RESET": SubResource("Animation_omyy6"),
+&"locked": SubResource("Animation_fu7ah"),
+&"unlocked": SubResource("Animation_ycemm")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_o4hb6"]
+animation = &"locked"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tx813"]
+animation = &"unlocked"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ad8s0"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fu7ah"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_omyy6"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_qmuku"]
+states/locked/node = SubResource("AnimationNodeAnimation_o4hb6")
+states/locked/position = Vector2(504, 26)
+states/unlocked/node = SubResource("AnimationNodeAnimation_tx813")
+states/unlocked/position = Vector2(504, 173)
+transitions = ["Start", "locked", SubResource("AnimationNodeStateMachineTransition_ad8s0"), "Start", "unlocked", SubResource("AnimationNodeStateMachineTransition_fu7ah"), "locked", "unlocked", SubResource("AnimationNodeStateMachineTransition_omyy6")]
+
+[node name="Escape Door" type="Area2D" node_paths=PackedStringArray("anim_tree")]
+script = ExtResource("1_tx813")
+hub_scene = "hub_test"
+anim_tree = NodePath("AnimationTree")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ad8s0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_o4hb6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1v2xd")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_qmuku")
+anim_player = NodePath("../AnimationPlayer")

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7ap34esjpr1w"]
+
+[ext_resource type="Texture2D" uid="uid://c83yghbdllqab" path="res://Art/Old/Tiles/Test/test_oneway.png" id="1_u6r3u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_473u8"]
+size = Vector2(48, 9)
+
+[node name="OneWayPlatform" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_473u8")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("1_u6r3u")

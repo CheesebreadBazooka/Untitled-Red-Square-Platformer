@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://doaii0vastpvn"]
+
+[ext_resource type="Script" uid="uid://c0hxu7qgs25x1" path="res://Levels/game.gd" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://c58d5cfoxaul3" path="res://Levels/Test/test_hub.tscn" id="2_uxjsv"]
+[ext_resource type="PackedScene" uid="uid://cy1clsqkuu48n" path="res://Levels/Test/test_level.tscn" id="3_6isyr"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_80nbo")
+level_dict = {
+"hub_test": ExtResource("2_uxjsv"),
+"level_test": ExtResource("3_6isyr")
+}
+start_level = "hub_test"

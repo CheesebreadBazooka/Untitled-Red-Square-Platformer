@@ -1,0 +1,117 @@
+[gd_scene load_steps=15 format=3 uid="uid://wlfwhylwcpmp"]
+
+[ext_resource type="Texture2D" uid="uid://b28tkhxamg7ff" path="res://Art/New/Objects/Bounce/bounce_horiz.png" id="1_xhfam"]
+[ext_resource type="Script" uid="uid://ci473jj4a27gr" path="res://Objects/Bounce/bounce_horiz_area.gd" id="2_cqwc4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wln6x"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhfam"]
+size = Vector2(38, 30)
+
+[sub_resource type="Animation" id="Animation_uq7f3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_juics"]
+resource_name = "bounce"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [1.5, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_cqwc4"]
+resource_name = "idle"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_juics"]
+_data = {
+&"RESET": SubResource("Animation_uq7f3"),
+&"bounce": SubResource("Animation_juics"),
+&"idle": SubResource("Animation_cqwc4")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cqwc4"]
+animation = &"bounce"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_uq7f3"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_juics"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4qqjy"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4qaqo"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_cqwc4"]
+states/bounce/node = SubResource("AnimationNodeAnimation_cqwc4")
+states/bounce/position = Vector2(622, 100)
+states/idle/node = SubResource("AnimationNodeAnimation_uq7f3")
+states/idle/position = Vector2(397, 100)
+transitions = ["idle", "bounce", SubResource("AnimationNodeStateMachineTransition_juics"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_4qqjy"), "bounce", "idle", SubResource("AnimationNodeStateMachineTransition_4qaqo")]
+
+[node name="BounceHorizontal" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wln6x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xhfam")
+
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("anim_tree")]
+script = ExtResource("2_cqwc4")
+bounce_height = -300.0
+anim_tree = NodePath("../AnimationTree")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_xhfam")
+debug_color = Color(1.92523e-06, 0.6308054, 0.4720381, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_juics")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_cqwc4")
+anim_player = NodePath("../AnimationPlayer")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

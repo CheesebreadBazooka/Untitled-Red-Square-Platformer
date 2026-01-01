@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://jmjybpytiign"]
+
+[ext_resource type="Script" uid="uid://8vqtr8w0cqle" path="res://Misc. Nodes/camera_lock_area.gd" id="1_k6bio"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6bio"]
+size = Vector2(999, 3)
+
+[node name="CameraLockArea" type="Area2D" node_paths=PackedStringArray("collision")]
+script = ExtResource("1_k6bio")
+collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_k6bio")
+debug_color = Color(0.65519905, 0.5167754, 0, 0.078431375)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

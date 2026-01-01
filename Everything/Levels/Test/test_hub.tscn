@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c58d5cfoxaul3"]
+
+[ext_resource type="Script" uid="uid://bxp5t4clhea4g" path="res://Levels/Test/hub_metadata.gd" id="1_titfh"]
+[ext_resource type="PackedScene" uid="uid://dhw271lj2yajh" path="res://Levels/Test/Room/Test Hub/test_hub_1.tscn" id="2_titfh"]
+
+[node name="LevelMetadataManager" type="Node2D"]
+script = ExtResource("1_titfh")
+starting_room = "start_room"
+id_dict = {
+"start_room": ExtResource("2_titfh")
+}
+pattern = "test_pattern"
+escape_duration = Array[int]([-6, -2])
+metadata/_custom_type_script = "uid://c2ktl3ohn01e8"

@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwku8blwdaft0"]
+
+[ext_resource type="Script" uid="uid://d1ehf1b5d03sk" path="res://Objects/Hub/level_door.gd" id="1_1j8wb"]
+[ext_resource type="Texture2D" uid="uid://clyqsrigtntfs" path="res://Art/New/Level-Dependant/Level Doors/Normal/placeholder_leveldoor.png" id="1_bkwp5"]
+[ext_resource type="Texture2D" uid="uid://besirndoihwpp" path="res://Art/New/Level-Dependant/Level Doors/Anti/pixil-frame-0 - 2025-12-28T162605.027.png" id="3_fclo5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1j8wb"]
+size = Vector2(64, 96)
+
+[node name="Level Door" type="Area2D"]
+script = ExtResource("1_1j8wb")
+texture = ExtResource("1_bkwp5")
+anti_texture = ExtResource("3_fclo5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_bkwp5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1j8wb")

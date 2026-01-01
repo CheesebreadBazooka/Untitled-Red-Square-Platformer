@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba30a4w33vjip"]
+
+[ext_resource type="Script" uid="uid://bnsmku5kyc6fh" path="res://Objects/Transition/spawn_point.gd" id="1_41hq6"]
+[ext_resource type="Texture2D" uid="uid://7s85k3a1dsvr" path="res://Art/New/Player/Neutral/reddie_base_frame.png" id="2_sxol8"]
+
+[node name="SpawnPoint" type="Node2D"]
+script = ExtResource("1_41hq6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0.41960785, 0, 0.63529414)
+texture = ExtResource("2_sxol8")

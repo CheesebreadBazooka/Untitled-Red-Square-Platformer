@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://jgv0stmkmwhc"]
+
+[ext_resource type="Texture2D" uid="uid://b1yf2y6o0jock" path="res://Art/New/Objects/Water-Related/water_test.png" id="1_7l47g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pqkxm"]
+size = Vector2(16, 16)
+
+[node name="WaterArea" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pqkxm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7l47g")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://nq4is2cv0vfl"]
+
+[ext_resource type="Texture2D" uid="uid://dfrbmw7o07b8n" path="res://Art/New/Objects/Destructibles/destructible_big.png" id="1_ih6nt"]
+[ext_resource type="Script" uid="uid://pfvi83ehojik" path="res://Objects/Destructible/destructible_health_manager.gd" id="2_8j2l7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8p4t"]
+size = Vector2(32, 32)
+
+[node name="BigDestructible" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_a8p4t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ih6nt")
+
+[node name="BaseHealthManager" type="Node" parent="."]
+script = ExtResource("2_8j2l7")
+metadata/_custom_type_script = "uid://cyeeaqqdafxi4"

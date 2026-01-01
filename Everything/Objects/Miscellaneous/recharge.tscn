@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmw7udv3i4jsv"]
+
+[ext_resource type="Texture2D" uid="uid://cdfeecjyi53yc" path="res://Art/New/Objects/Miscellaneous/pixil-frame-0 - 2025-11-20T152049.337.png" id="1_378b7"]
+[ext_resource type="Script" uid="uid://cfgo0su4jdfw2" path="res://Objects/Miscellaneous/recharge.gd" id="1_bmxed"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bmxed"]
+size = Vector2(16, 16)
+
+[node name="Recharge" type="Area2D"]
+script = ExtResource("1_bmxed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bmxed")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_378b7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

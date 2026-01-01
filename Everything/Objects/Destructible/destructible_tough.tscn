@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://g73kqalussjy"]
+
+[ext_resource type="Script" uid="uid://cxpeeartijs45" path="res://Objects/Destructible/tough_heath_manager.gd" id="2_q5ybx"]
+[ext_resource type="Texture2D" uid="uid://dnx5tmtsp6jm6" path="res://Art/New/Objects/Destructibles/destructible_tough.png" id="2_rbqlo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rbqlo"]
+size = Vector2(32, 32)
+
+[node name="DestructibleTough" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rbqlo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_rbqlo")
+
+[node name="DestructibleHeathManager" type="Node" parent="."]
+script = ExtResource("2_q5ybx")
+metadata/_custom_type_script = "uid://pfvi83ehojik"

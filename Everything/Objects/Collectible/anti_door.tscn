@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bd4u1r6yqhs2l"]
+
+[ext_resource type="Script" uid="uid://dvmdsihc3dpf8" path="res://Objects/Collectible/anti_door.gd" id="1_p1dhu"]
+[ext_resource type="Texture2D" uid="uid://bf3tjkuuq5ikp" path="res://Art/New/Collectables/anti_door.png" id="2_fm05d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_27psf"]
+size = Vector2(64, 96)
+
+[node name="AntiDoor" type="Area2D"]
+script = ExtResource("1_p1dhu")
+hub_scene = "hub_test"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_fm05d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_27psf")

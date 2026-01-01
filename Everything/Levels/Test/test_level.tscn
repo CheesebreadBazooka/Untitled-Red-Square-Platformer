@@ -1,0 +1,26 @@
+[gd_scene load_steps=9 format=3 uid="uid://cy1clsqkuu48n"]
+
+[ext_resource type="Script" uid="uid://c2ktl3ohn01e8" path="res://Misc. Nodes/level_metadata_manager.gd" id="1_0mx2e"]
+[ext_resource type="PackedScene" uid="uid://cs31npymb5vv7" path="res://Levels/Test/Room/Test Level/test_level_2.tscn" id="2_o28tf"]
+[ext_resource type="PackedScene" uid="uid://pacpf0aamm4j" path="res://Levels/Test/Room/Test Level/test_level_1.tscn" id="3_rh1mq"]
+[ext_resource type="PackedScene" uid="uid://5afx23e4gyut" path="res://Levels/Test/Room/Test Level/test_level_3.tscn" id="4_3sh47"]
+[ext_resource type="PackedScene" uid="uid://bkke3jp7i50jp" path="res://Objects/Escape/escape_timer.tscn" id="5_t257k"]
+[ext_resource type="PackedScene" uid="uid://dfdn5yv5bro57" path="res://Entities/Extra Dangerous/doomskull.tscn" id="6_w1yfd"]
+[ext_resource type="PackedScene" uid="uid://31txat0upbk5" path="res://Objects/Collectible/anti_key.tscn" id="7_8vwns"]
+[ext_resource type="Texture2D" uid="uid://dlbtmu12niuqh" path="res://Art/New/Pallettes/Time Gem Alt Colors/black.png" id="7_f0koc"]
+
+[node name="Test Level" type="Node2D"]
+script = ExtResource("1_0mx2e")
+starting_room = "room1"
+id_dict = {
+"escape": ExtResource("4_3sh47"),
+"room1": ExtResource("2_o28tf"),
+"room2": ExtResource("3_rh1mq")
+}
+pattern = "paint_pattern"
+escape_duration = Array[int]([2, 5])
+scene_esc_time = ExtResource("5_t257k")
+scene_doom = ExtResource("6_w1yfd")
+scene_anti_key = ExtResource("7_8vwns")
+timegem_palette = ExtResource("7_f0koc")
+anti_id = "anti_test"
