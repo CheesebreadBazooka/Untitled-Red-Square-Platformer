@@ -465,6 +465,7 @@ size = Vector2(32, 64)
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sprite", "anim_tree", "camera", "book_area", "spin_area")]
 script = ExtResource("1_gb1tc")
 run_accel = 10.0
+powerup = "ghost"
 book_speed = 2000.0
 twirl_coolset = 0.5
 sprite = NodePath("Sprite2D")
@@ -472,6 +473,7 @@ anim_tree = NodePath("AnimationTree")
 camera = NodePath("Camera2D")
 book_area = NodePath("BookArea")
 spin_area = NodePath("SpinArea")
+ghost_power_speed = 300.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_tcnsb")

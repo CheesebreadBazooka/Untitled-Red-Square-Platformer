@@ -33,9 +33,14 @@ class_name Player
 @export var book_area : DamageArea2D
 @export var spin_area : DamageArea2D
 
+@export var ghost_power_speed : float = 400
+@export var ghost_power_accel : float = 50
+@export var ghost_flylimit : float = 3
+
 var direction : float = 0.0
 var face_dir : float = 1
 var last_face : float = 1
+var vertdir : float = 0.0
 
 var last_vel : Vector2 = Vector2.ZERO
 var last_last_vel : Vector2 = Vector2.ZERO
@@ -91,6 +96,11 @@ var camera_lock : Vector2 = Vector2.ZERO
 var can_move : bool = true
 var can_die : bool = true
 
+var ghost_power_flying : bool = false
+var ghost_canfly : bool = false
+var lasghofly : bool = false
+var ghost_flycount : float = 0.0
+
 
 func _ready() -> void:
 	if get_tree().current_scene.current_level.escape_on:
@@ -115,8 +125,11 @@ func _physics_process(delta: float) -> void:
 	lastspin = spinning
 	last_last_vel = last_vel
 	last_vel = velocity
+	lasghofly = ghost_canfly
 
 	just_hell = false
+
+	vertdir = Input.get_axis("up", "down")
 
 	if Input.is_action_just_pressed("jump") and can_move:
 		jumpbuffer = jumpbuffer_set
@@ -147,12 +160,13 @@ func _physics_process(delta: float) -> void:
 		book_area_cooldown = 0.1
 
 	##print_debug(str(hellyeah))
-	##print_debug(str(velocity.x))
-	##print_debug(str(velocity.y))
+	print_debug(str(velocity))
 
 	
 	# Add the gravity.
 	if is_on_floor():
+		ghost_canfly = false
+		ghost_flycount = 0.0
 		if velalter_reason == "backflip":
 			velocity.x = (run_speed + book_speed) * face_dir
 			freeze_x = false
@@ -175,7 +189,7 @@ func _physics_process(delta: float) -> void:
 				#grav_altmult = 2
 			#else:
 				#grav_altmult = 1
-		velocity += get_gravity().rotated(grav_rotate) * delta * grav_mult * grav_altmult
+		velocity += get_gravity().rotated(grav_rotate) * delta * grav_mult * grav_altmult * int(!ghost_power_flying)
 
 
 	lastfloor = is_on_floor()
@@ -206,11 +220,34 @@ func _physics_process(delta: float) -> void:
 				if wallclimb_mult > 0.0:
 					velocity.y = jump_speed * wallclimb_mult
 					wallclimb_mult -= 0.2
+			ghost_canfly = true
+
+	if powerup == "ghost":
+		if Input.is_action_pressed("jump"):
+			if lasghofly:
+				if ghost_canfly:
+					if Vector2(direction, vertdir).length() != 0:
+						if ghost_flycount <= ghost_flylimit:
+							ghost_flycount += delta
+							ghost_power_flying = true
+							velocity += Vector2(direction, vertdir).normalized() * ghost_power_accel
+							if velocity.length() > ghost_power_speed:
+								velocity *= 0.9
+								if velocity.length() < ghost_power_speed:
+									velocity = velocity.normalized() * ghost_power_speed
+						else:
+							ghost_canfly = false
+							ghost_power_flying = false
+					else:
+						ghost_canfly = false
+						ghost_power_flying = false
+		else:
+			ghost_power_flying = false
 	
 	if bookbuffer > 0 and can_move:
-		if powerup == "none":
+		if powerup == "none" or "ghost":
 			neutral_attack_handling()
-		if is_on_wall() and (not is_on_floor()) and (not Input.is_action_pressed("down")) and (not Input.is_action_pressed("up")):
+		if is_on_wall() and (not Input.is_action_pressed("down")) and (not Input.is_action_pressed("up")):
 			face_dir = -face_dir
 			velocity.x = run_speed * face_dir if Input.is_action_pressed("run") else speed * face_dir
 			#print_debug("Wallcilmb Mult: " + str(wallclimb_mult))
@@ -359,7 +396,7 @@ func neutral_attack_handling():
 	bookbuffer = 0
 	if is_on_floor():
 		if Input.is_action_pressed("up"):
-			velocity = Vector2(velocity.x / 2, jump_speed * 2)
+			velocity = Vector2(velocity.x / 2, jump_speed * 1.5)
 			can_double_jump = false
 			spinning = true
 		elif Input.is_action_pressed("down"):
